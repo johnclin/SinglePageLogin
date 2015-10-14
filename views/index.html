@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+        <script src="js/login.js"></script>
+        <meta charset="UTF-8">
+        <title>Login Page</title>
+    </head>
+
+    <body ng-app="loginApp">
+        <div ng-controller="loginController">
+            <div id="Main">
+                <!-- where angular injects -->
+                <div ng-view></div>
+            </div>
+        </div>
+    </body>
+
+</html>
