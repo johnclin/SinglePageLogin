@@ -1,1 +1,20 @@
 <div>Employee List</div>
+
+<table>
+    <tr>
+        <td>Employee ID</td>
+        <td>Birthdate</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Gender</td>
+        <td>Hire Date</td>
+    </tr>
+    <tr ng-repeat="x in employeeData">
+        <td>{{ x.id }}</td>
+        <td>{{ x.birthdate }}</td>
+        <td>{{ x.firstname }}</td>
+        <td>{{ x.lastname }}</td>
+        <td>{{ x.gender }}</td>
+        <td>{{ x.hiredate }}</td>
+    </tr>
+</table>

@@ -1,7 +1,7 @@
 --  Users table
   CREATE TABLE users (
        id INT NOT NULL AUTO_INCREMENT,
-       username CHAR(30) NOT NULL,
+       username CHAR(30) NOT NULL UNIQUE,
        password CHAR (60) NOT NULL,
        active BOOLEAN DEFAULT TRUE,
        PRIMARY KEY (id)
@@ -17,6 +17,9 @@
        hiredate Date NOT NULL,
        PRIMARY KEY (id)
   );
+
+  INSERT INTO users(username, password, active)
+  VALUES("john", "3da541559918a808c2402bba5012f6c60b27661c", true);
 
   INSERT INTO employees(id, birthdate, firstname, lastname, gender, hiredate)
   VALUES
