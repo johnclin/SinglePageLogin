@@ -7,7 +7,12 @@ loginApp.config(function($routeProvider) {
     $routeProvider
         // route for the login page
         .when('/', {
-            templateUrl : '../login.html',
+            templateUrl : 'login.html',
+            controller  : 'loginController'
+        })
+
+        .when('/login', {
+            templateUrl : 'login.html',
             controller  : 'loginController'
         })
 
@@ -18,14 +23,8 @@ loginApp.config(function($routeProvider) {
         })
 });
 
-loginApp.controller('loginController', ['$scope','$http','$location', function($scope,$http,$location){
+loginApp.controller('loginController', ['$scope','$http','$location','$window', function($scope,$http,$location,$window){
     $scope.master = {};
-    $scope.master.isLoggedIn = 0;
-    console.log($scope.master.isLoggedIn);
-
-    if($scope.isLoggedIn){
-        $location.path('/employee');
-    }
 
     $scope.login = function(user) {
         $scope.master = angular.copy(user);
@@ -41,13 +40,9 @@ loginApp.controller('loginController', ['$scope','$http','$location', function($
                 'Content-Type': 'application/json'
             }
         }).then(function successCallback(response) {
-            console.log(response.data);
-            $scope.errorMessage = response.data.message;
             if (response.data.code == 100){
-                $scope.isLoggedIn = 1;
-                console.log($scope.master.isLoggedIn);
+                $window.sessionStorage.token = response.data.token;
                 $location.path('/employee');
-
             }
         }, function errorCallback(response) {
             $scope.error();
@@ -56,21 +51,20 @@ loginApp.controller('loginController', ['$scope','$http','$location', function($
 
     $scope.error = function() {
         $scope.user = angular.copy($scope.master);
-        $scope.errorMessage = 'error';
     };
 }]);
 
-loginApp.controller('employeeController', ['$scope','$http','$location', function($scope,$http,$location){
-    //console.log($scope.master.isLoggedIn);
-    //if(!$scope.isLoggedIn){
+loginApp.controller('employeeController', ['$scope','$http','$location','$window', function($scope,$http,$location,$window){
     $http({
         method: 'GET',
-        url: 'http://localhost:3000/employeeList'
+        url: 'http://localhost:3000/api/employeeList',
+        headers: {'Authorization': 'Bearer '+$window.sessionStorage.token}
     }).then(function successCallback(response) {
-        console.log(response.data);
+
         $scope.employeeData = response.data;
     }, function errorCallback(response) {
-        $scope.error();
+        $scope.errorMessage = 'You are not logged in, please log in before proceeding.';
+        $location.path('/login');
     });
 
     //}

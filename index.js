@@ -3,6 +3,8 @@ var express = require('express');
 var connect = require('connect');
 var serveStatic = require('serve-static');
 var bodyParser = require("body-parser");
+var expressJwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
 
 connect().use(serveStatic('views')).listen(8080);
 
@@ -36,7 +38,8 @@ function LoginRequest(res,query) {
             connection.release();
             if(!err) {
                 if(rows.length == 1) {
-                    res.json({"code" : 100, "status" : "Successful Login", "message" : "Success"});
+                    var token = jwt.sign(rows, 'supersecret', { expiresIn: 60*5 });
+                    res.json({"code" : 100, "status" : "Successful Login", "message" : "Success", "token" : token});
                 }else if(rows.length == 0){
                     res.json({"code" : 102, "status" : "User not found", "message" : "Invalid Username/Password Combination."});
                 }else{
@@ -82,14 +85,17 @@ function GetEmployeeList(res,query) {
     });
 }
 
+app.use('/api', expressJwt({secret: 'supersecret'}));
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
 });
 
-app.get("/employeeList",function(req,res) {
+app.get("/api/employeeList",function(req,res) {
     var query = "select * from employees";
     GetEmployeeList(res,query);
 });
