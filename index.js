@@ -110,12 +110,12 @@ app.use(function(req, res, next) {
 });
 
 app.get("/api/employeeList",function(req,res) {
-    var query = "select * from employees";
+    var query = "SELECT * FROM employees";
     GetEmployeeList(res,query);
 });
 
 app.post("/login", function(req,res) {
-    var query = "SELECT * from USERS where username='" + req.body.username + "' and password='" + req.body.password + "' and active=1";
+    var query = "SELECT * FROM users WHERE username='" + req.body.username + "' and password='" + req.body.password + "' and active=1";
     LoginRequest(res,query);
 });
 
