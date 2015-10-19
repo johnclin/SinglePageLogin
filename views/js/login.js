@@ -24,7 +24,7 @@ loginApp.config(function($routeProvider) {
 });
 
 loginApp.controller('loginController', ['$scope','$http','$location','$window', function($scope,$http,$location,$window){
-    $scope.master = {};
+
 
     if($window.sessionStorage.token == -1){
         $scope.errorMessage = "You have been logged out";
@@ -32,32 +32,34 @@ loginApp.controller('loginController', ['$scope','$http','$location','$window', 
     }
 
     $scope.login = function(user) {
-        $scope.master = angular.copy(user);
-        var pwHash = CryptoJS.SHA1(user.password);
-        var jsonReq = {username: user.username, password: pwHash.toString()};
+        if(/^[a-zA-Z0-9-_]+$/.test(user.username) && /^[a-zA-Z0-9-_]+$/.test(user.password)){
+            var pwHash = CryptoJS.SHA1(user.password);
+            var jsonReq = {username: user.username, password: pwHash.toString()};
 
-        $http({
-            method: 'POST',
-            data: jsonReq,
-            url: 'http://localhost:3000/login',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            if (response.data.code == 100){
-                $window.sessionStorage.token = response.data.token;
-                $location.path('/employee');
-            }else{
-                $scope.errorMessage = response.data.message;
-            }
-        }, function errorCallback(response) {
-            $scope.error();
-        });
+            $http({
+                method: 'POST',
+                data: jsonReq,
+                url: 'http://localhost:3000/login',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                if (response.data.code == 100){
+                    $window.sessionStorage.token = response.data.token;
+                    $location.path('/employee');
+                }else{
+                    $scope.errorMessage = response.data.message;
+                }
+            }, function errorCallback(response) {
+                $scope.error();
+            });
+        }else{
+            $scope.errorMessage = "Usernames and Passwords are alphanumeric only";
+        }
+
+
     };
 
-    $scope.error = function() {
-        $scope.user = angular.copy($scope.master);
-    };
 }]);
 
 loginApp.controller('employeeController', ['$scope','$http','$location','$window', function($scope,$http,$location,$window){
