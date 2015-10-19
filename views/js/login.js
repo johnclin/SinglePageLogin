@@ -65,7 +65,7 @@ loginApp.controller('loginController', ['$scope','$http','$location','$window', 
 loginApp.controller('employeeController', ['$scope','$http','$location','$window', function($scope,$http,$location,$window){
     $http({
         method: 'GET',
-        url: 'http://localhost:3000/api/employeeList',
+        url: 'http://ec2-52-24-72-40.us-west-2.compute.amazonaws.com:3000/api/employeeList',
         headers: {'Authorization': 'Bearer '+$window.sessionStorage.token}
     }).then(function successCallback(response) {
 
