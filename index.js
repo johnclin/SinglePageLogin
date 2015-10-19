@@ -6,7 +6,7 @@ var bodyParser = require("body-parser");
 var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 
-connect().use(serveStatic('views')).listen(8080);
+connect().use(serveStatic('views')).listen(80);
 
 var app = express();
 
