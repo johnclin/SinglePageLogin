@@ -1,0 +1,74 @@
+/*
+    All pages
+*/
+h1 {
+    position: fixed;
+    top: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+/*
+    Login
+*/
+
+.simple-form{
+    margin: auto;
+    margin-top: 75px;
+    width: 300px;
+}
+
+.login-field {
+    position: absolute;
+    float: left;
+}
+
+label {
+    float: left;
+    clear: left;
+    width: 75px;
+    text-align: right;
+}
+
+#login {
+    margin-top: 20px;
+}
+
+.errorMessage {
+    width: 200px;
+    text-align: center;
+    color: red;
+    margin-left: 45px;
+}
+
+/*
+    Employee
+*/
+
+table {
+    margin: auto;
+    margin-top: 75px;
+    width: 700px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#header-row{
+    background-color: #C0C0C0;
+}
+.bgcolor0{
+    background-color: #FFFFFF;
+}
+
+.bgcolor1{
+    background-color: #F0F0F0;
+}
+
+#logout{
+    position: fixed;
+    right:5%;
+}

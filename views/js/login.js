@@ -26,9 +26,13 @@ loginApp.config(function($routeProvider) {
 loginApp.controller('loginController', ['$scope','$http','$location','$window', function($scope,$http,$location,$window){
     $scope.master = {};
 
+    if($window.sessionStorage.token == -1){
+        $scope.errorMessage = "You have been logged out";
+        $window.sessionStorage.clear();
+    }
+
     $scope.login = function(user) {
         $scope.master = angular.copy(user);
-        $scope.errorMessage = 'Logging in';
         var pwHash = CryptoJS.SHA1(user.password);
         var jsonReq = {username: user.username, password: pwHash.toString()};
 
@@ -43,6 +47,8 @@ loginApp.controller('loginController', ['$scope','$http','$location','$window', 
             if (response.data.code == 100){
                 $window.sessionStorage.token = response.data.token;
                 $location.path('/employee');
+            }else{
+                $scope.errorMessage = response.data.message;
             }
         }, function errorCallback(response) {
             $scope.error();
@@ -67,5 +73,8 @@ loginApp.controller('employeeController', ['$scope','$http','$location','$window
         $location.path('/login');
     });
 
-    //}
+    $scope.logout = function(){
+        $window.sessionStorage.token = -1;
+        $location.path('/login');
+    }
 }]);

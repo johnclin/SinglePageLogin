@@ -1,6 +1,13 @@
+<h1>Login</h1>
 <form novalidate class="simple-form">
-    Name: <input type="text" ng-model="user.username" /><br />
-    Password: <input type="password" ng-model="user.password" /><br />
-    <input type="submit" ng-click="login(user)" value="Login" />
-    {{ errorMessage }}
+    <br>
+        <label for="username">Name:</label>
+        <input type="text" id="username" ng-model="user.username" class="login-field"/>
+    </br>
+    <br>
+        <label for="password">Password:</label> <input type="password" id="password" ng-model="user.password" class="login-field" />
+    </br>
+    <input type="submit" ng-click="login(user)" value="Login" id="login" />
+    <br />
+    <div class="errorMessage">{{ errorMessage }}</div>
 </form>

@@ -1,7 +1,7 @@
-<div>Employee List</div>
-
-<table>
-    <tr>
+<h1>Employee List</h1>
+<button id="logout" ng-click="logout()">Logout</button>
+<table border id="employeeTable">
+    <tr id="header-row">
         <td>Employee ID</td>
         <td>Birthdate</td>
         <td>First Name</td>
@@ -10,11 +10,11 @@
         <td>Hire Date</td>
     </tr>
     <tr ng-repeat="x in employeeData">
-        <td>{{ x.id }}</td>
-        <td>{{ x.birthdate }}</td>
-        <td>{{ x.firstname }}</td>
-        <td>{{ x.lastname }}</td>
-        <td>{{ x.gender }}</td>
-        <td>{{ x.hiredate }}</td>
+        <td class="bgcolor{{ x.bgColorScheme}}">{{ x.id }}</td>
+        <td class="bgcolor{{ x.bgColorScheme}}">{{ x.birthdate }}</td>
+        <td class="bgcolor{{ x.bgColorScheme}}">{{ x.firstname }}</td>
+        <td class="bgcolor{{ x.bgColorScheme}}">{{ x.lastname }}</td>
+        <td class="bgcolor{{ x.bgColorScheme}}">{{ x.gender }}</td>
+        <td class="bgcolor{{ x.bgColorScheme}}">{{ x.hiredate }}</td>
     </tr>
 </table>

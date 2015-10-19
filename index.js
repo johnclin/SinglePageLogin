@@ -6,7 +6,7 @@ var bodyParser = require("body-parser");
 var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 
-connect().use(serveStatic('views')).listen(80);
+connect().use(serveStatic('views')).listen(8080);
 
 var app = express();
 
@@ -25,8 +25,10 @@ function LoginRequest(res,query) {
 
     pool.getConnection(function(err,connection){
         if (err) {
-            connection.release();
-            res.json({"code" : 101, "status" : "Unable to connect to database", "message" : "The system is currently offline."});
+            if(connection) {
+                connection.release();
+            }
+            res.json({"code" : 101, "status" : "Unable to connect to database", "message" : "The system is currently offline.  Please try back later."});
             return;
         }
 
@@ -62,7 +64,10 @@ function GetEmployeeList(res,query) {
 
     pool.getConnection(function(err,connection){
         if (err) {
-            connection.release();
+            if(connection){
+                connection.release();
+            }
+
             res.json({"code" : 101, "status" : "Unable to connect to database", "message" : "The system is currently offline."});
             return;
         }
@@ -72,7 +77,16 @@ function GetEmployeeList(res,query) {
                 res.json({"code" : 102, "status" : err.message, "message" : "No Employee entries found."});
                 return;
             }
+            var colorScheme = 0;
+            rows.forEach(function(element, index, array){
+                rows[index].bgColorScheme = colorScheme;
+                if(colorScheme == 0){
+                    colorScheme = 1;
+                }else{
+                    colorScheme = 0;
+                }
 
+            });
             res.json(rows);
             connection.release();
             return;
