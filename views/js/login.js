@@ -39,7 +39,7 @@ loginApp.controller('loginController', ['$scope','$http','$location','$window', 
             $http({
                 method: 'POST',
                 data: jsonReq,
-                url: 'http://localhost:3000/login',
+                url: 'http://ec2-52-24-72-40.us-west-2.compute.amazonaws.com:3000/login',
                 headers: {
                     'Content-Type': 'application/json'
                 }
